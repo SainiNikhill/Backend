@@ -1,0 +1,90 @@
+Express.js is a fast, minimalist web framework for Node.js used to build web applications and APIs. It simplifies the process of handling requests, responses, and routing, making backend development more efficient.
+
+🔹 Features of Express.js:
+Middleware Support – Use functions to process requests before sending a response.
+Routing System – Define multiple routes for different HTTP methods (GET, POST, PUT, DELETE).
+Template Engines – Supports EJS, Pug, Handlebars, etc., for rendering dynamic content.
+Static File Serving – Easily serve static assets like images, CSS, and JavaScript files.
+REST API Development – Ideal for building RESTful APIs.
+Database Integration – Works well with MongoDB (Mongoose), PostgreSQL, MySQL, etc
+
+
+***********server setup
+install package -- npm i express
+
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send('Hello, Express!');
+});
+
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});
+
+
+
+
+********************Routes in Express.js
+Routes in Express define how an application responds to client requests to specific URLs (endpoints) using HTTP methods like GET, POST, PUT, and DELETE.
+
+const express = require('express');
+const app = express();
+
+// Home Route
+app.get('/', (req, res) => {
+    res.send('Welcome to Express!');
+});
+
+// About Route
+app.get('/about', (req, res) => {
+    res.send('This is the About Page');
+});
+
+// Start the Server
+app.listen(3000, () => {
+    console.log('Server is running on http://localhost:3000');
+});
+
+
+*******************************Middleware
+Middleware in Express.js
+Middleware functions in Express.js are functions that execute during the request-response cycle. They have access to the request (req), response (res), and next() function, which passes control to the next middleware.
+
+types:
+BUilt in (express.json(), express.urlencoded(),express.static())
+custom
+third party(cors morgan)
+
+//middleware
+
+//builtin middleware
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use(express.static("public"))
+
+
+//third party middleware
+app.use(morgan("dev"));
+
+//custom middleware
+app.use((req,res,next)=>{
+    const a=10
+    const b=20
+    console.log(10+20)
+    return next() // without next server stuck at middleware only , cant reach the final destination
+})
+
+
+//middleware for a particular route
+app.use('/login',(req,res,next)=>{
+    console.log("hello this is middleware")
+    next()
+
+},
+(req,res)=>{
+    res.send("ha bhai agaya swad")
+
+}
+)
